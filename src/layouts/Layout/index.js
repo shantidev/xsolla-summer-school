@@ -1,27 +1,21 @@
-import styled from 'styled-components';
-import { media } from '../../helpers/mixins';
+import React from 'react';
+import Header from '../Header';
+import Container from '../Container';
+import Wrapper from '../Wrapper';
+import styles from './styles.module.scss';
 
-export default styled.div`
-  width: 100%;
-  min-height: 100vh;
-`;
+const Layout = (props) => {
+  const { children } = props;
 
-export const MainContainer = styled.div`
-  margin: 0 auto;
-  padding-right: 24px;
-  padding-left: 24px;
-  
-  ${media.tablet`
-    padding-right: 32px;
-    padding-left: 32px;
-    padding-top: 64px;
-  `}
-  
-  ${
-    media.desktop`
-      width: 1208px;
-      padding-right: 0;
-      padding-left: 0;
-      padding-top: 104px;
-  `}
-`;
+  return (
+    <Wrapper className={styles.wrapper}>
+      <Header/>
+      <Container>
+        {children}
+      </Container>
+      {/*<footer>123</footer>*/}
+    </Wrapper>
+  );
+};
+
+export default Layout;
