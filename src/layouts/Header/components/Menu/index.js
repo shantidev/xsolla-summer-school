@@ -48,7 +48,7 @@ Menu.defaultProps = {
       title: 'All projects',
     },
     {
-      link: '/charts',
+      link: '/statistics',
       title: 'Chart',
     },
   ]
