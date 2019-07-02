@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import ROUTES from '../../../../constants/routes';
 import styles from './styles.module.scss';
 
 const Menu = (props) => {
@@ -44,12 +45,12 @@ Menu.propTypes = {
 Menu.defaultProps = {
   menuData: [
     {
-      link: '/projects',
-      title: 'All projects',
+      link: ROUTES.projects,
+      title: 'Projects',
     },
     {
-      link: '/statistics',
-      title: 'Chart',
+      link: ROUTES.statistics,
+      title: 'Statistics',
     },
   ]
 };
