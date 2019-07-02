@@ -1,4 +1,4 @@
-@import "../../../../constants/colors";
+@import "../../../../assets/styles/constants/_colors.scss";
 
 .nav {
   width: 600px;
@@ -23,5 +23,5 @@
 }
 
 .activeLink {
-  color: $greyLight;
+  color: $banana;
 }

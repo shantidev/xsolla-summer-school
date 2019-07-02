@@ -1,19 +1,24 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
-import styles from './styles.module.scss';
+import Typography from '../../assets/ui/Typography';
+import styles from './styles.modules.scss';
 
 const TransactionsTable = props => {
   const { transactions, columns } = props;
 
   return (
-    <ReactTable
-      data={transactions}
-      columns={columns}
-      pageSizeOptions={[15, 50, 100]}
-      defaultPageSize={15}
-    />
+    <Fragment>
+      <Typography element={'h1'}>Transactions</Typography>
+      <ReactTable
+        data={transactions}
+        columns={columns}
+        pageSizeOptions={[15, 50, 100]}
+        defaultPageSize={15}
+        className={styles.table}
+      />
+    </Fragment>
   )
 };
 

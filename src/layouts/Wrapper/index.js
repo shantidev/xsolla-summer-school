@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 const Wrapper = (props) => {
-  const { children, className } = props;
+  const { children } = props;
 
   return (
-    <div className={`${styles.wrapper} ${className}`}>
+    <div className={`${styles.wrapper}`}>
       {children}
     </div>
   );
@@ -14,7 +14,6 @@ const Wrapper = (props) => {
 
 Wrapper.propTypes = {
   children: PropTypes.any,
-  className: PropTypes.string,
 };
 
 export default Wrapper;
