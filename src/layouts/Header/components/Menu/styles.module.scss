@@ -1,0 +1,27 @@
+@import "../../../../constants/colors";
+
+.nav {
+  width: 600px;
+}
+
+.menu {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.element {
+  margin-right: 40px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.link {
+  color: $white;
+  text-decoration: none;
+}
+
+.activeLink {
+  color: $greyLight;
+}
