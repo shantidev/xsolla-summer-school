@@ -1,4 +1,6 @@
+@import "../../assets/styles/constants/sizes";
+
 .container {
-  width: 1208px;
+  width: $desktop + px;
   margin: 0 auto;
 }
