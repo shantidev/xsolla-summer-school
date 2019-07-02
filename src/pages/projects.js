@@ -1,12 +1,12 @@
 import React from 'react';
-import TransactionsTable from '../containers/TransactionsTable';
+import ProjectsList from '../containers/ProjectsList';
 import Layout from '../layouts/Layout';
 import Wrapper from '../layouts/Wrapper';
 
 export default () => (
   <Layout>
     <Wrapper>
-      <TransactionsTable/>
+      <ProjectsList/>
     </Wrapper>
   </Layout>
 );

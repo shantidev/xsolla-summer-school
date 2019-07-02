@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import * as transactionsModule from '../../store/modules/transactions';
 
@@ -8,22 +9,30 @@ const TransactionsTable = props => {
   const { transactions, getTransactions } = props;
 
   useEffect(() => {
-    getTransactions();
-  }, []);
-
-  console.log('transactions', transactions);
+    if (transactions.length === 0) {
+      getTransactions();
+    }
+  }, [transactions.length]);
 
   return (
-    <TransactionsTableComponent/>
+    <TransactionsTableComponent
+      transactions={transactions}
+    />
   )
 };
 
+TransactionsTable.propTypes = {
+  transactions: PropTypes.array,
+  getTransactions: PropTypes.func,
+};
+
 const mapStateToProps = (state, props) => ({
-  transactions: state.transactions || props.transactions
+  transactions: state.transactions.transactions || props.transactions.transactions,
+  loading: state.transactions.loading ,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getTransactions: () => dispatch(transactionsModule.getTransactions())
+  getTransactions: () => dispatch(transactionsModule.getTransactions()),
 });
 
 export default connect(

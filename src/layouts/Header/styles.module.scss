@@ -5,59 +5,29 @@
   padding-bottom: 24px;
   display: flex;
   justify-content: space-between;
-  font-family: 'Raleway', sans-serif;
-  font-weight: bold;
-  background-color: $mauve;
-}
-
-.logo {
-  width: 24px;
-  height: 24px;
-  background-image: url("../../assets/images/logo.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.profile {
-  position: relative;
-  overflow: hidden;
-  min-width: 130px;
-  max-width: 250px;
-  height: 24px;
   color: $white;
-  cursor: pointer;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-
-  &::after, &::before {
-    position: absolute;
-    right: 0;
-    transition: all 0.5s ease-in-out;
-  }
-
-  &::after {
-    content: '❤';
-    opacity: 1;
-  }
-
-  &::before {
-    content: '🦄';
-    opacity: 0;
-  }
-
-  &:hover {
-    &::after {
-      opacity: 0;
-    }
-
-    &::before {
-      opacity: 1;
-    }
-  }
+  font-family: 'Raleway', sans-serif;
+  font-weight: 500;
+  background-color: $mauve;
 }
 
 .wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.logo {
+  width: 154px;
+  height: 24px;
+  padding-left: calc(24px + 6px); // Ширина иконки + отступ
+  text-transform: uppercase;
+  background-image: url("../../assets/images/logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.logoLink {
+  color: $white;
+  text-decoration: none;
 }

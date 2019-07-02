@@ -2,6 +2,10 @@
 * Set common styles in app
 */
 
+* {
+  box-sizing: border-box;
+}
+
 html,
 body {
   word-break: normal;
