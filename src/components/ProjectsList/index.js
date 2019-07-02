@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
+import Typography from '../../assets/ui/Typography';
+import styles from './styles.modules.scss';
 
 const ProjectList = props => {
   const { projects, columns } = props;
 
   return (
-    <ReactTable
-      data={projects}
-      columns={columns}
-      pageSizeOptions={[15, 50, 100]}
-      defaultPageSize={15}
-    />
+    <Fragment>
+      <Typography element={'h1'}>Projects</Typography>
+      <ReactTable
+        data={projects}
+        columns={columns}
+        pageSizeOptions={[15, 50, 100]}
+        defaultPageSize={15}
+        className={styles.table}
+      />
+    </Fragment>
   )
 };
 

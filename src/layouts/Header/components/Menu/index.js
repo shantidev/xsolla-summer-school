@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 
 const Menu = (props) => {
-  const { menuData } = props;
+  const { menuData, location } = props;
 
   const [menuElements, getMenuElements] = useState([]);
 
@@ -12,15 +12,14 @@ const Menu = (props) => {
     renderMenuElements(menuData);
   }, [menuData]);
 
-  /**
-   * Получает ссылки в меню и сохраняет их в state menuElements
-   * @param menu
-   */
   function renderMenuElements(menu) {
    const elements = menu.map((menuItem, idx) => {
       return (
         <li key={idx} className={styles.element}>
-          <NavLink className={styles.link} to={menuItem.link}>
+          <NavLink
+            className={`${styles.link} ${location.pathname === menuItem.link && styles.activeLink}`}
+            to={menuItem.link}
+            >
             {menuItem.title}
           </NavLink>
         </li>
@@ -55,4 +54,4 @@ Menu.defaultProps = {
   ]
 };
 
-export default Menu;
+export default withRouter(Menu);

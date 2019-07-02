@@ -1,4 +1,4 @@
 /* Optional */
 @import '~reset-css/reset.css';
-@import './fonts.css';
-@import './scaffolding.css';
+@import './common/fonts.css';
+@import './common/scaffolding.css';
