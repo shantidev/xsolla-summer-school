@@ -56,8 +56,7 @@ export const getProjects = () => async (dispatch, getState) => {
     let initialTransactions = transactions;
 
     if (filter.status) {
-      const payload = await api.getTransactions();
-      initialTransactions = payload.data;
+      initialTransactions = await api.getTransactions();
     }
 
     for (const transaction of initialTransactions) {
