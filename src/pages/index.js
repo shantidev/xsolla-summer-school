@@ -3,7 +3,6 @@ import TransactionsTable from '../containers/TransactionsTable';
 import TransactionsFilter from '../containers/TransactionsTable/components/TransactionsFilter';
 import Layout from '../layouts/Layout';
 import Wrapper from '../layouts/Wrapper';
-import Typography from "../assets/ui/Typography";
 
 export default () => {
   useEffect(() => {
@@ -13,7 +12,6 @@ export default () => {
   return (
     <Layout>
       <Wrapper>
-        <Typography element={'h1'}>Transactions</Typography>
         <TransactionsFilter/>
         <TransactionsTable/>
       </Wrapper>

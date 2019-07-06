@@ -12,11 +12,14 @@ const initialState = {
   loading: false,
   transactions: [],
   projects: [],
-  isFilterOn: false,
+  filter: {
+    status: false,
+    search: '',
+  }
 };
 
 /**
- *  Получает транзакции из json
+ * Получает транзакции из json
  *
  * @returns {Function}
  */
@@ -39,20 +42,25 @@ export const getTransactions = () => async (dispatch, getState) => {
 /**
  * Получает массив проектов, по которым происходили транзакции
  *
- * @property {Array} transactions
  * @returns {Function}
  */
 
 export const getProjects = () => async (dispatch, getState) => {
-  const { loading, transactions } = getState().transactions;
+  const { loading, transactions, filter } = getState().transactions;
   if (loading) return;
 
   try {
     dispatch({ type: REQUEST });
     const projects = [];
     const map = new Map();
+    let initialTransactions = transactions;
 
-    for (const transaction of transactions) {
+    if (filter.status) {
+      const payload = await api.getTransactions();
+      initialTransactions = payload.data;
+    }
+
+    for (const transaction of initialTransactions) {
       if (!map.has(transaction.transaction.project.id)) {
         map.set(transaction.transaction.project.id, true);
         projects.push({
@@ -70,10 +78,17 @@ export const getProjects = () => async (dispatch, getState) => {
   }
 };
 
+/**
+ * Получает фильтрованные транзакции по @param str
+ * Сохраняет значение поля `Search`
+ *
+ * @param {String} str
+ * @returns {Function}
+ */
 export const getFilteredTransactions = (str) => async (dispatch, getState) => {
   const { loading, transactions } = getState().transactions;
   if (loading) return;
-  str.length > 0 ? dispatch({ type: SAVE_FILTER_ON }) : dispatch({ type: SAVE_FILTER_OFF });
+  str.length > 0 ? dispatch({ type: SAVE_FILTER_ON, search: str }) : dispatch({ type: SAVE_FILTER_OFF });
 
   try {
     dispatch({ type: REQUEST });
@@ -99,9 +114,21 @@ export const reducer = (state = initialState, action) => {
     case SAVE_PROJECTS:
       return { ...state, projects: action.projects };
     case SAVE_FILTER_ON:
-      return { ...state, isFilterOn: true };
+      return {
+        ...state,
+        filter: {
+          status: true,
+          search: action.search,
+        }
+      };
     case SAVE_FILTER_OFF:
-      return { ...state, isFilterOn: false };
+      return {
+      ...state,
+      filter: {
+        status: false,
+        search: '',
+      }
+    };
     default:
       return state;
   }

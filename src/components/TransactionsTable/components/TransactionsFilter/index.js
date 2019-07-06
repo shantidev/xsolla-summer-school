@@ -5,9 +5,9 @@ import styles from './styles.module.scss';
 import TextInput from '../../../../assets/ui/TextInput';
 
 const Filter = props => {
-  const { onSearch } = props;
+  const { onSearch, filter } = props;
 
-  const [search, getSearch] = useState('');
+  const [search, getSearch] = useState(filter.search);
 
   function onChangeSearch(event) {
     getSearch(event.target.value);
@@ -27,10 +27,7 @@ const Filter = props => {
 };
 
 Filter.propTypes = {
-  search: PropTypes.oneOf([
-    PropTypes.string,
-    PropTypes.number
-  ]),
+  filter: PropTypes.object,
   onSearch: PropTypes.func
 };
 
