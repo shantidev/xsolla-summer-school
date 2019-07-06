@@ -1,6 +1,6 @@
 export function filterDataByString(transactions, str) {
   const filtered = transactions.filter((obj) => {
-    // TODO save in array and search in loop
+    // TODO save in array (>> create param {Array} keys) and search in loop for universality
     const projectName = obj.transaction.project.name || '';
     const transactionStatus = obj.transaction.status || '';
     const paymentMethod = obj.transaction.payment_method.name || '';
