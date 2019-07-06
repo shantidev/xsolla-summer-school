@@ -17,8 +17,7 @@ export async function getFilteredTransactions(data, str) {
       return await getTransactions();
     } else {
       const transactions = await getTransactions();
-      const response = await filterDataByString(transactions, str);
-      return response;
+      return await filterDataByString(transactions, str);
     }
   } catch (err) {
     console.error(err);

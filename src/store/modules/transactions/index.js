@@ -91,9 +91,9 @@ export const reducer = (state = initialState, action) => {
     case REQUEST:
       return { ...state, loading: true };
     case RECEIVE:
-      return { ...state, loading: false};
+      return { ...state, loading: false };
     case REJECT:
-      return { ...state, loading: false};
+      return { ...state, loading: false };
     case SAVE_TRANSACTIONS:
       return { ...state, transactions: action.payload };
     case SAVE_PROJECTS:
