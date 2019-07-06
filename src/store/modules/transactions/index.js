@@ -5,15 +5,13 @@ export const RECEIVE = 'TRANSACTIONS/RECEIVE';
 export const REJECT = 'TRANSACTIONS/REJECT';
 export const SAVE_TRANSACTIONS = 'TRANSACTIONS/SAVE_TRANSACTIONS';
 export const SAVE_PROJECTS = 'TRANSACTIONS/SAVE_PROJECTS';
-export const SAVE_FILTER_ON = 'TRANSACTIONS/SAVE_FILTER_ON';
-export const SAVE_FILTER_OFF = 'TRANSACTIONS/SAVE_FILTER_OFF';
+export const SAVE_FILTER = 'TRANSACTIONS/SAVE_FILTER';
 
 const initialState = {
   loading: false,
   transactions: [],
   projects: [],
   filter: {
-    status: false,
     search: '',
   }
 };
@@ -55,7 +53,7 @@ export const getProjects = () => async (dispatch, getState) => {
     const map = new Map();
     let initialTransactions = transactions;
 
-    if (filter.status) {
+    if (filter.search.length > 0) {
       initialTransactions = await api.getTransactions();
     }
 
@@ -87,10 +85,10 @@ export const getProjects = () => async (dispatch, getState) => {
 export const getFilteredTransactions = (str) => async (dispatch, getState) => {
   const { loading, transactions } = getState().transactions;
   if (loading) return;
-  str.length > 0 ? dispatch({ type: SAVE_FILTER_ON, search: str }) : dispatch({ type: SAVE_FILTER_OFF });
 
   try {
     dispatch({ type: REQUEST });
+    dispatch({ type: SAVE_FILTER, search: str });
     const payload = await api.getFilteredTransactions(transactions, str);
     dispatch({ type: SAVE_TRANSACTIONS, payload });
     dispatch({ type: RECEIVE });
@@ -112,22 +110,13 @@ export const reducer = (state = initialState, action) => {
       return { ...state, transactions: action.payload };
     case SAVE_PROJECTS:
       return { ...state, projects: action.projects };
-    case SAVE_FILTER_ON:
+    case SAVE_FILTER:
       return {
         ...state,
         filter: {
-          status: true,
           search: action.search,
         }
       };
-    case SAVE_FILTER_OFF:
-      return {
-      ...state,
-      filter: {
-        status: false,
-        search: '',
-      }
-    };
     default:
       return state;
   }
