@@ -6,13 +6,13 @@ import * as transactionsModule from '../../store/modules/transactions';
 import TransactionsTableComponent from '../../components/TransactionsTable';
 
 const TransactionsTable = props => {
-  const { transactions, getTransactions } = props;
+  const { transactions, getTransactions, isFilterOn } = props;
 
   useEffect(() => {
-    if (transactions.length === 0) {
+    if (transactions.length === 0 && !isFilterOn) {
       getTransactions();
     }
-  }, [transactions.length]);
+  }, [isFilterOn, transactions.length]);
 
   return (
     <TransactionsTableComponent
@@ -28,7 +28,8 @@ TransactionsTable.propTypes = {
 
 const mapStateToProps = (state, props) => ({
   transactions: state.transactions.transactions || props.transactions.transactions,
-  loading: state.transactions.loading ,
+  loading: state.transactions.loading,
+  isFilterOn: state.transactions.isFilterOn,
 });
 
 const mapDispatchToProps = (dispatch) => ({

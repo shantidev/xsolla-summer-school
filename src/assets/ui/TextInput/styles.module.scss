@@ -1,0 +1,123 @@
+@import "../../styles/constants/input";
+
+.container {
+  height: $containerHeight + px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.wrapper {
+  position: relative;
+  height: $wrapperHeight + px;
+  width: 100%;
+  padding-bottom: $valueBottom + px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  box-sizing: border-box;
+
+  /* Border bottom animation */
+  &::before {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    height: $borderHeight + px;
+    width: 100%;
+    background-color: $unFocusBorderColor;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    height: $borderHeight + px;
+    width: 100%;
+    background-color: $focusBorderColor;
+    opacity: 0;
+    transform: scaleX(0);
+    transform-origin: 0 0;
+    transition: all ease-in-out 1s;
+  }
+}
+
+.wrapper__focus {
+  &::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+.wrapper__invalid {
+  &::before {
+    background-color: $errorColor;
+  }
+
+  &::after {
+    background-color: $errorColor;
+  }
+}
+
+.label {
+  position: absolute;
+  bottom: $valueBottom + px;
+  width: 100%;
+  height: $valueHeight + px;
+  font-size: $valueFontSize + px;
+  line-height: $valueLineHeight + px;
+  color: $unFocusValueColor;
+  transition: all ease-in-out 0.3s;
+  cursor: text;
+  z-index: 0;
+}
+
+.label__focus {
+  bottom: ($valueBottom + $valueHeight) + px;
+  height: $labelHeight + px;
+  font-size: $smallFontSize + px;
+  line-height: $smallLineHeight + px;
+}
+
+.label__invalid {
+  color: $errorColor;
+}
+
+.input {
+  width: 100%;
+  height: $valueHeight + px;
+  font-size: $valueFontSize + px;
+  line-height: $valueLineHeight + px;
+  color: $unFocusValueColor;
+  transition: all ease-in-out 0.4s;
+
+  /* Unset default input styles */
+  padding: 0;
+  outline: none;
+  border: none;
+  z-index: 1;
+
+  &:focus {
+    color: $focusValueColor;
+  }
+}
+
+.icon {
+  height: 24px;
+  width: 24px;
+  opacity: 0.4;
+  transition: opacity ease-in-out 0.3s;
+}
+
+.icon__focus {
+  opacity: 1;
+}
+
+.error {
+  width: 100%;
+  height: $errorHeight + px;
+  margin-top: $errorMarginTop + px;
+  font-size: $smallFontSize + px;
+  line-height: $smallLineHeight + px;
+  color: $errorColor;
+}
