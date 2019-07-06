@@ -14,7 +14,7 @@ const AppRouter = () => (
     <Switch>
       <Route exact path={ROUTES.index} component={TransactionsTable}/>
       <Route exact path={ROUTES.projects} component={Projects}/>
-      {/*<Route exact path={ROUTES.statistics} component={Statistics}/>*/}
+      <Route exact path={ROUTES.statistics} component={Statistics}/>
       <Route exact path={ROUTES['404']} component={Error404}/>
       <Redirect from="*" to={ROUTES['404']}/>
     </Switch>

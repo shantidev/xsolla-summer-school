@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
-import styles from './styles.modules.scss';
+import styles from './styles.module.scss';
 
 const ProjectList = props => {
   const { projects, columns } = props;

@@ -1,20 +1,12 @@
 import * as api from '../../../api/transactions';
-
-export const REQUEST = 'TRANSACTIONS/REQUEST';
-export const RECEIVE = 'TRANSACTIONS/RECEIVE';
-export const REJECT = 'TRANSACTIONS/REJECT';
-export const SAVE_TRANSACTIONS = 'TRANSACTIONS/SAVE_TRANSACTIONS';
-export const SAVE_PROJECTS = 'TRANSACTIONS/SAVE_PROJECTS';
-export const SAVE_FILTER = 'TRANSACTIONS/SAVE_FILTER';
-
-const initialState = {
-  loading: false,
-  transactions: [],
-  projects: [],
-  filter: {
-    search: '',
-  }
-};
+import {
+  REQUEST,
+  RECEIVE,
+  REJECT,
+  SAVE_TRANSACTIONS,
+  SAVE_PROJECTS,
+  SAVE_FILTER,
+} from './actionType';
 
 /**
  * Получает транзакции из json
@@ -97,29 +89,3 @@ export const getFilteredTransactions = (str) => async (dispatch, getState) => {
     dispatch({ type: REJECT });
   }
 };
-
-export const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case REQUEST:
-      return { ...state, loading: true };
-    case RECEIVE:
-      return { ...state, loading: false };
-    case REJECT:
-      return { ...state, loading: false };
-    case SAVE_TRANSACTIONS:
-      return { ...state, transactions: action.payload };
-    case SAVE_PROJECTS:
-      return { ...state, projects: action.projects };
-    case SAVE_FILTER:
-      return {
-        ...state,
-        filter: {
-          search: action.search,
-        }
-      };
-    default:
-      return state;
-  }
-};
-
-export default reducer;

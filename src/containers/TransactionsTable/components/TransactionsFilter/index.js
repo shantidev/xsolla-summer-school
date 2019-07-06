@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import * as transactionsModule from '../../../../store/modules/transactions';
+import * as transactionsModule from '../../../../store/modules/transactions/action';
 
 import TransactionsFilterComponent from '../../../../components/TransactionsTable/components/TransactionsFilter';
 

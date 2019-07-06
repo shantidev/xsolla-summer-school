@@ -48,10 +48,10 @@ Menu.defaultProps = {
       link: ROUTES.projects,
       title: 'Projects',
     },
-    /*{
+    {
       link: ROUTES.statistics,
       title: 'Statistics',
-    },*/
+    },
   ]
 };
 
