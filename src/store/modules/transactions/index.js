@@ -3,13 +3,37 @@ import * as api from '../../../api/transactions';
 export const REQUEST = 'TRANSACTIONS/REQUEST';
 export const RECEIVE = 'TRANSACTIONS/RECEIVE';
 export const REJECT = 'TRANSACTIONS/REJECT';
-export const SAVE_TRANSACTIONS = 'SAVE_TRANSACTIONS/REJECT';
-export const SAVE_PROJECTS = 'SAVE_PROJECTS/REJECT';
+export const SAVE_TRANSACTIONS = 'TRANSACTIONS/SAVE_TRANSACTIONS';
+export const SAVE_PROJECTS = 'TRANSACTIONS/SAVE_PROJECTS';
+export const SAVE_FILTER_ON = 'TRANSACTIONS/SAVE_FILTER_ON';
+export const SAVE_FILTER_OFF = 'TRANSACTIONS/SAVE_FILTER_OFF';
 
 const initialState = {
   loading: false,
   transactions: [],
   projects: [],
+  isFilterOn: false,
+};
+
+/**
+ *  Получает транзакции из json
+ *
+ * @returns {Function}
+ */
+export const getTransactions = () => async (dispatch, getState) => {
+  const { loading } = getState().transactions;
+  if (loading) return;
+
+  try {
+    dispatch({ type: REQUEST });
+    const payload = await api.getTransactions();
+
+    dispatch({ type: SAVE_TRANSACTIONS, payload });
+    dispatch({ type: RECEIVE });
+  } catch (err) {
+    console.error(err);
+    dispatch({ type: REJECT });
+  }
 };
 
 /**
@@ -46,19 +70,14 @@ export const getProjects = () => async (dispatch, getState) => {
   }
 };
 
-/**
- *  Получает транзакции из json
- *
- * @returns {Function}
- */
-export const getTransactions = () => async (dispatch, getState) => {
-  const { loading } = getState().transactions;
+export const getFilteredTransactions = (str) => async (dispatch, getState) => {
+  const { loading, transactions } = getState().transactions;
   if (loading) return;
+  str.length > 0 ? dispatch({ type: SAVE_FILTER_ON }) : dispatch({ type: SAVE_FILTER_OFF });
 
   try {
     dispatch({ type: REQUEST });
-    const payload = await api.getTransactions();
-
+    const payload = await api.getFilteredTransactions(transactions, str);
     dispatch({ type: SAVE_TRANSACTIONS, payload });
     dispatch({ type: RECEIVE });
   } catch (err) {
@@ -79,6 +98,10 @@ export const reducer = (state = initialState, action) => {
       return { ...state, transactions: action.payload };
     case SAVE_PROJECTS:
       return { ...state, projects: action.projects };
+    case SAVE_FILTER_ON:
+      return { ...state, isFilterOn: true };
+    case SAVE_FILTER_OFF:
+      return { ...state, isFilterOn: false };
     default:
       return state;
   }

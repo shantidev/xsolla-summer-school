@@ -1,0 +1,28 @@
+@import "./colors";
+
+/* Heights */
+$valueHeight: 24;
+$labelHeight: 28;
+$errorHeight: $labelHeight;
+$borderHeight: 2;
+
+/* Indents */
+$valueBottom: 8;
+$errorMarginTop: 4;
+
+/* Typography and colors*/
+$valueFontSize: 16;
+$valueLineHeight: $valueHeight;
+$smallFontSize: 14;
+$smallLineHeight: $labelHeight;
+$focusValueColor: $graphite;
+$unFocusValueColor: $mauveDarkRGBA_6;
+$focusBorderColor: $shampoo;
+$unFocusBorderColor: $mauveDarkRGBA_2;
+$errorColor: $error;
+
+/* Input field wrapper height */
+$wrapperHeight: $labelHeight + $valueHeight + $borderHeight + $valueBottom;
+
+/* Component container height */
+$containerHeight: $wrapperHeight + $errorHeight + $errorMarginTop;
