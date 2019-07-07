@@ -22,7 +22,7 @@ const PaymentMethodStatistics = props => {
       data: {
         labels: labels,
         datasets: [{
-          label: 'Show data',
+          label: 'usage of payment method',
           data: values,
         }]
       }

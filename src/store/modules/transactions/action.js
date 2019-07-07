@@ -42,24 +42,21 @@ export const getProjects = () => async (dispatch, getState) => {
 
   try {
     dispatch({ type: REQUEST });
-    const projects = [];
-    const map = new Map();
     let initialTransactions = transactions;
 
     if (filter.search.length > 0) {
       initialTransactions = await api.getTransactions();
     }
 
-    // TODO отрефакторить без map
-    for (const transaction of initialTransactions) {
-      if (!map.has(transaction.transaction.project.id)) {
-        map.set(transaction.transaction.project.id, true);
-        projects.push({
-          id: transaction.transaction.project.id,
-          name: transaction.transaction.project.name,
+    const projects = initialTransactions.reduce((result, current) => {
+      if (!result.find((el) => el.id === current.transaction.project.id)) {
+        result.push({
+          id: current.transaction.project.id,
+          name: current.transaction.project.name,
         })
       }
-    }
+      return result;
+    }, []).sort((a, b) => a.id - b.id);
 
     dispatch({ type: SAVE_PROJECTS, projects });
     dispatch({ type: RECEIVE });
