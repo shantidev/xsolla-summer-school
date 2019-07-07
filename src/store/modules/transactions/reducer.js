@@ -5,6 +5,7 @@ import {
   SAVE_TRANSACTIONS,
   SAVE_PROJECTS,
   SAVE_FILTER,
+  SAVE_STATISTICS_OF_PAYMENT_METHOD,
 } from './actionType';
 
 const initialState = {
@@ -13,7 +14,8 @@ const initialState = {
   projects: [],
   filter: {
     search: '',
-  }
+  },
+  statisticsOfPaymentMethod: []
 };
 
 export const reducer = (state = initialState, action) => {
@@ -34,6 +36,11 @@ export const reducer = (state = initialState, action) => {
         filter: {
           search: action.search,
         }
+      };
+    case SAVE_STATISTICS_OF_PAYMENT_METHOD:
+      return {
+        ...state,
+        statisticsOfPaymentMethod: action.statistics
       };
     default:
       return state;

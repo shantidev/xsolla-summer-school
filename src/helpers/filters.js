@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export function filterDataByString(transactions, str) {
+export function filterDataByString(transactions, str, keys) {
   /* Search keys */
   const filtered = transactions.filter((obj) => {
     const projectName = obj.transaction.project.name || '';

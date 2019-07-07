@@ -1,19 +1,41 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import styles from './styles.module.scss';
+import Chart from 'chart.js';
 
 const PaymentMethodStatistics = props => {
-  const {  } = props;
+  const { statistics } = props;
+  const chartRef = useRef(null);
+
+  useEffect(() => {
+    const labels = [];
+    const values = [];
+
+    if (statistics.length > 0) {
+      statistics.forEach((el) => {
+        labels.push(el.name);
+        values.push(el.value);
+      });
+    }
+
+    new Chart(chartRef.current, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Show data',
+          data: values,
+        }]
+      }
+    });
+  }, [statistics.length]);
 
   return (
-    <div>chart</div>
+    <canvas ref={chartRef}/>
   )
 };
 
 PaymentMethodStatistics.propTypes = {
-
+  statistics: PropTypes.array,
 };
-
-PaymentMethodStatistics.defaultProps = {};
 
 export default PaymentMethodStatistics;
