@@ -6,12 +6,11 @@ import styles from './styles.module.scss';
 
 const Menu = (props) => {
   const { menuData, location } = props;
-
   const [menuElements, getMenuElements] = useState([]);
 
   useEffect(() => {
     renderMenuElements(menuData);
-  }, [menuData]);
+  }, [menuData, location.pathname]);
 
   function renderMenuElements(menu) {
    const elements = menu.map((menuItem, idx) => {
