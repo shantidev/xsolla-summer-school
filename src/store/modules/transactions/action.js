@@ -1,20 +1,13 @@
 import * as api from '../../../api/transactions';
-
-export const REQUEST = 'TRANSACTIONS/REQUEST';
-export const RECEIVE = 'TRANSACTIONS/RECEIVE';
-export const REJECT = 'TRANSACTIONS/REJECT';
-export const SAVE_TRANSACTIONS = 'TRANSACTIONS/SAVE_TRANSACTIONS';
-export const SAVE_PROJECTS = 'TRANSACTIONS/SAVE_PROJECTS';
-export const SAVE_FILTER = 'TRANSACTIONS/SAVE_FILTER';
-
-const initialState = {
-  loading: false,
-  transactions: [],
-  projects: [],
-  filter: {
-    search: '',
-  }
-};
+import {
+  REQUEST,
+  RECEIVE,
+  REJECT,
+  SAVE_TRANSACTIONS,
+  SAVE_PROJECTS,
+  SAVE_FILTER,
+  SAVE_STATISTICS_OF_PAYMENT_METHOD,
+} from './actionType';
 
 /**
  * Получает транзакции из json
@@ -49,23 +42,21 @@ export const getProjects = () => async (dispatch, getState) => {
 
   try {
     dispatch({ type: REQUEST });
-    const projects = [];
-    const map = new Map();
     let initialTransactions = transactions;
 
     if (filter.search.length > 0) {
       initialTransactions = await api.getTransactions();
     }
 
-    for (const transaction of initialTransactions) {
-      if (!map.has(transaction.transaction.project.id)) {
-        map.set(transaction.transaction.project.id, true);
-        projects.push({
-          id: transaction.transaction.project.id,
-          name: transaction.transaction.project.name,
+    const projects = initialTransactions.reduce((result, current) => {
+      if (!result.find((el) => el.id === current.transaction.project.id)) {
+        result.push({
+          id: current.transaction.project.id,
+          name: current.transaction.project.name,
         })
       }
-    }
+      return result;
+    }, []).sort((a, b) => a.id - b.id);
 
     dispatch({ type: SAVE_PROJECTS, projects });
     dispatch({ type: RECEIVE });
@@ -98,28 +89,38 @@ export const getFilteredTransactions = (str) => async (dispatch, getState) => {
   }
 };
 
-export const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case REQUEST:
-      return { ...state, loading: true };
-    case RECEIVE:
-      return { ...state, loading: false };
-    case REJECT:
-      return { ...state, loading: false };
-    case SAVE_TRANSACTIONS:
-      return { ...state, transactions: action.payload };
-    case SAVE_PROJECTS:
-      return { ...state, projects: action.projects };
-    case SAVE_FILTER:
-      return {
-        ...state,
-        filter: {
-          search: action.search,
-        }
-      };
-    default:
-      return state;
+/**
+ * Находит количество вхождений в массив транзакций для каждого уникального свойства payment_method (по `name`)
+ *
+ * @returns {Function}
+ */
+export const getStatisticsOfPaymentMethod = () => async (dispatch, getState) => {
+  const { loading, transactions, filter } = getState().transactions;
+  if (loading) return;
+
+  try {
+    dispatch({ type: REQUEST });
+    let initialTransactions = transactions;
+    let statistics;
+
+    if (filter.search.length > 0 || !transactions || transactions.length === 0) {
+      initialTransactions = await api.getTransactions();
+    }
+
+    statistics = initialTransactions.reduce((result, current) => {
+      let position = 0;
+      if (result.find((el, pos) => {position = pos; return el.name === current.transaction.payment_method.name})) {
+        result[position].value++
+      } else {
+        result.push({name: current.transaction.payment_method.name, value: 1})
+      }
+      return result;
+    }, []).sort((a, b) => a.value - b.value);
+
+    dispatch({ type: SAVE_STATISTICS_OF_PAYMENT_METHOD, statistics });
+    dispatch({ type: RECEIVE });
+  } catch (err) {
+    console.error(err);
+    dispatch({ type: REJECT });
   }
 };
-
-export default reducer;

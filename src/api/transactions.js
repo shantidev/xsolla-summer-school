@@ -1,5 +1,5 @@
 import { apiStatic } from './index';
-import { filterDataByString } from '../helpers/filters';
+import { filterTransactionsByString } from '../helpers/filters';
 
 export async function getTransactions() {
   try {
@@ -17,7 +17,7 @@ export async function getFilteredTransactions(data, str) {
       return await getTransactions();
     } else {
       const transactions = await getTransactions();
-      return await filterDataByString(transactions, str);
+      return await filterTransactionsByString(transactions, str);
     }
   } catch (err) {
     console.error(err);
