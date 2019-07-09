@@ -11,7 +11,7 @@ export async function getTransactions() {
   }
 }
 
-export async function getFilteredTransactions(data, str) {
+export async function getFilteredTransactions(str) {
   try {
     if (str.length === 0) {
       return await getTransactions();

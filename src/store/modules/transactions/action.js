@@ -74,13 +74,13 @@ export const getProjects = () => async (dispatch, getState) => {
  * @returns {Function}
  */
 export const getFilteredTransactions = (str) => async (dispatch, getState) => {
-  const { loading, transactions } = getState().transactions;
+  const { loading } = getState().transactions;
   if (loading) return;
 
   try {
     dispatch({ type: REQUEST });
     dispatch({ type: SAVE_FILTER, search: str });
-    const payload = await api.getFilteredTransactions(transactions, str);
+    const payload = await api.getFilteredTransactions(str);
     dispatch({ type: SAVE_TRANSACTIONS, payload });
     dispatch({ type: RECEIVE });
   } catch (err) {
