@@ -19,26 +19,28 @@ const TransactionsTable = props => {
   return (
     <TransactionsTableComponent
       transactions={transactions}
+      searchValue={filter.search}
     />
-  )
+  );
 };
 
 TransactionsTable.propTypes = {
   transactions: PropTypes.array,
-  getTransactions: PropTypes.func,
+  getTransactions: PropTypes.func
 };
 
 const mapStateToProps = (state, props) => ({
-  transactions: state.transactions.transactions || props.transactions.transactions,
+  transactions:
+    state.transactions.transactions || props.transactions.transactions,
   loading: state.transactions.loading,
-  filter: state.transactions.filter,
+  filter: state.transactions.filter
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getTransactions: () => dispatch(transactionsModule.getTransactions()),
+const mapDispatchToProps = dispatch => ({
+  getTransactions: () => dispatch(transactionsModule.getTransactions())
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(TransactionsTable);
