@@ -29,9 +29,8 @@ TransactionsTable.propTypes = {
   getTransactions: PropTypes.func
 };
 
-const mapStateToProps = (state, props) => ({
-  transactions:
-    state.transactions.transactions || props.transactions.transactions,
+const mapStateToProps = state => ({
+  transactions: state.transactions.transactions,
   loading: state.transactions.loading,
   filter: state.transactions.filter
 });

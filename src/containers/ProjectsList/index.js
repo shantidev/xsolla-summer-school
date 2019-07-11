@@ -8,32 +8,30 @@ import ProjectListComponent from '../../components/ProjectsList';
 const ProjectList = props => {
   const { projects, getProjects, transactions, getTransactions } = props;
 
-  useEffect( () => {
+  useEffect(() => {
     if (transactions.length === 0) getTransactions();
     if (projects.length === 0) getProjects();
   }, [transactions.length, projects.length]);
 
-  return (
-    <ProjectListComponent projects={projects}/>
-  )
+  return <ProjectListComponent projects={projects} />;
 };
 
 ProjectList.propTypes = {
-  projects: PropTypes.array,
+  projects: PropTypes.array
 };
 
-const mapStateToProps = (state, props) => ({
-  projects: state.transactions.projects || props.transactions.projects,
-  transactions: state.transactions.transactions || props.transactions.transactions,
-  loading: state.transactions.loading ,
+const mapStateToProps = state => ({
+  projects: state.transactions.projects,
+  transactions: state.transactions.transactions,
+  loading: state.transactions.loading
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   getProjects: () => dispatch(transactionsModule.getProjects()),
-  getTransactions: () => dispatch(transactionsModule.getTransactions()),
+  getTransactions: () => dispatch(transactionsModule.getTransactions())
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(ProjectList);

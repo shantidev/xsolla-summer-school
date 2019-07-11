@@ -13,23 +13,24 @@ const TransactionsFilter = props => {
       filter={filter}
       onSearch={getFilteredTransactions}
     />
-  )
+  );
 };
 
 TransactionsFilter.propTypes = {
   filter: PropTypes.object,
-  getFilteredTransactions: PropTypes.func,
+  getFilteredTransactions: PropTypes.func
 };
 
-const mapStateToProps = (state, props) => ({
-  filter: state.transactions.filter || props.transaction.filter,
+const mapStateToProps = state => ({
+  filter: state.transactions.filter
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  getFilteredTransactions: (str) => dispatch(transactionsModule.getFilteredTransactions(str)),
+const mapDispatchToProps = dispatch => ({
+  getFilteredTransactions: str =>
+    dispatch(transactionsModule.getFilteredTransactions(str))
 });
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(TransactionsFilter);
